@@ -84,7 +84,7 @@
 	```javascript
 	 setInterval(setDate, 1000);
 	 // setDate 为每 1000 毫秒触发的 function
-	 ```
+	```
 	
 2. 获取三个指针对应的 HTML 元素，留待后续操作
 	

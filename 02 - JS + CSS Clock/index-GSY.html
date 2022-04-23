@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS+CSS 时钟</title>
+</head>
+
+<body>
+
+
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
+    </div>
+  </div>
+
+  <audio src="clocktik.mp3" id="clocktik" loop="true"></audio>
+
+  <style>
+    html {
+      background: url(background.jpg);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    /* 外框 */
+    .clock {
+      position: relative;
+      margin: auto;
+      min-width: 30rem;
+      min-height: 30rem;
+      width: 30rem;
+      height: 30rem;
+      /* 外框宽度 */
+      border: 20px solid white;
+      /* 圆外框 */
+      border-radius: 50%;
+      /* 指针距表框距离（会撑大外框） */
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 15px black,
+        0 0 10px rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* 表盘 */
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* account for the height of the clock hands */
+    }
+
+    /* 指针 */
+    .hand {
+      background-color: #fff;
+      position: absolute;
+      /* 居中 */
+      bottom: 50%;
+      right: 50%;
+      box-shadow:
+        0px 0px 8px rgba(0, 0, 0, .7);
+      /* 设定旋转原点 */
+      transform-origin: bottom center;
+      /* transform: rotate(90deg); */
+    }
+
+    .hour-hand {
+      width: 10px;
+      height: 35%;
+      /* 垂直向上移动 height/2px 居中; */
+      margin-right: -5px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      /* 指针跳动的过渡效果 */
+      transition: all 1000ms;
+    }
+
+    .min-hand {
+      height: 45%;
+      width: 6px;
+      /* 垂直向上移动 height/2px 居中; */
+      margin-right: -3px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      transition: all 1000ms;
+    }
+
+    .second-hand {
+      height: 53%;
+      width: 2px;
+      /* 垂直向上移动 height/2px 居中; */
+      margin-right: -1px;
+      /* 尖指针 */
+      border-top-right-radius: 50%;
+      border-top-left-radius: 50%;
+      transition: all 80ms cubic-bezier(0.84, 0.66, 0.26, 1.9);
+      background-color: rgb(220, 70, 70);
+    }
+
+    /* 表心 */
+    .clock-face:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      /* 中心移动至原点 */
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0px 0px 8px rgba(0, 0, 0, .7);
+      background-color: rgb(255, 255, 255);
+    }
+  </style>
+
+  <script>
+    // 声明全局变量
+    let secondDeg = 0,
+      minDeg = 0,
+      hourDeg = 0;
+
+    // 获取指针
+    const hourHand = document.querySelector(".hour-hand");
+    const minHand = document.querySelector(".min-hand");
+    const secondHand = document.querySelector(".second-hand");
+    const clocktik = document.getElementById("clocktik");
+
+    // 初始化时间
+    function initDate() {
+      const date = new Date();
+      const second = date.getSeconds(); // 获取当前秒
+      secondDeg = (second / 60) * 360;
+      const min = date.getMinutes(); // 获取当前秒
+      minDeg = (min / 60) * 360 + ((second / 60) / 60) * 360;
+      const hour = date.getHours(); // 获取当前秒
+      hourDeg = (hour / 12) * 360 + (min / 60) * 30;
+      console.log(`${hourDeg}-${minDeg}-${secondDeg}`);
+    }
+    // 更新时间
+    function updateDate() {
+      secondDeg += (1 / 60) * 360;
+      minDeg += (1 / 60 / 60) * 360;
+      hourDeg += (1 / 60 / 60 / 60) * 360;
+      // 防止秒值过大失去精度，每24小时秒数归零
+      if (secondDeg == 86400) {secondDeg = 0};
+      // 旋转角度
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+      minHand.style.transform = `rotate(${minDeg}deg)`;
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+      console.log(`${hourDeg}-${minDeg}-${secondDeg}`);
+    }
+
+    function run() {
+      initDate();
+      setInterval(() => {
+        updateDate();
+      }, 1000);
+    }
+    // chrome禁止自动播放音频，添加点击播放事件
+    document.addEventListener("click", () => {
+      clocktik.play();
+    })
+    window.onload = run();
+  </script>
+</body>
+
+</html>

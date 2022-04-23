@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 
@@ -58,8 +60,52 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
   <script>
+    // 按键播放声音函数
+    function keyPlaySound() {
+      // querySelector获取事件对应keyCode键码属性的元素
+      const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${event.keyCode}"]`);
 
+      // 处理无效的按键事件
+      if (!audio) return;
+
+      // 播放音源
+      audio.play();
+      audio.currentTime = 0; // 每次播放之后都使音频播放进度归零，实现按下后连续播放
+
+      // 改变样式
+      key.classList.add("playing");
+    }
+
+    // 移除样式函数
+    function removeClass() {
+      const key = Array.from(document.getElementsByTagName("div"));
+      key.forEach(element => {
+        element.classList.remove("playing")
+      });
+    }
+
+    // 处理点击事件
+    function clickPlaySound() {
+      const keys = Array.from(document.getElementsByClassName("key"));  // 获取页面所有按钮元素，Array.from转化为合法数组
+      const audios = Array.from(document.getElementsByTagName("audio"));
+      keys.forEach((element, i) => {
+        element.addEventListener("mousedown", () => {
+          audios[i].play();
+          audios[i].currentTime = 0;
+          element.classList.add("playing");
+        }, false);
+        element.addEventListener("mouseup", removeClass, false);
+      })
+    };
+
+    // 监听按键按下事件，播放并添加样式
+    window.addEventListener("keydown", keyPlaySound, false);
+    // 监听按键弹起事件，移除样式
+    window.addEventListener("keyup", removeClass, false);
+    window.onload = clickPlaySound();
   </script>
 
 </body>
+
 </html>
