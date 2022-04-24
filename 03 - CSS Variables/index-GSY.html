@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- 隐藏referrer特性，绕过防盗链 -->
-  <meta name="referrer" content="no-referrer"> 
+  <!-- 绕过防盗链 -->
+  <meta name="referrer" content="no-referrer">
   <title>Scoped CSS Variables and JS</title>
 </head>
 
@@ -13,31 +13,31 @@
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
-    <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <input type="range" name="padding" min="10" max="200" value="10" data-sizing="px">
 
     <label for="blur">Blur:</label>
-    <input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input type="range" name="filter" min="0" max="25" value="10" data-sizing="px">
 
     <label for="base">Base Color</label>
-    <input type="color" name="basecolor" value="#ffc600">
+    <input type="color" name="background" value="#ffffff">
   </div>
 
   <div class="content">
     <code class="result">
       img {
-        padding : <span id="code-spacing">10px</span>;
-        filter : blur(<span id="code-blur">10px</span>);
-        background : <span id="code-basecolor">#fff</span>;
+        padding : <span id="code-padding">10px</span>;
+        filter : blur(<span id="code-filter">10px</span>);
+        background : <span id="code-background">#fff</span>;
       }
     </code>
-    <img src="https://pic.netbian.com/uploads/allimg/220327/001531-164831133162ac.jpg">
+    <img id="img" src="https://pic.netbian.com/uploads/allimg/220327/001531-164831133162ac.jpg">
   </div>
 
   <style>
     /*
       misc styles, nothing to do with CSS variables
     */
-    :root {
+    /* :root {
       --spacing: 10px;
       --blur: 10px;
       --basecolor: #fff;
@@ -47,7 +47,7 @@
       padding: var(--spacing);
       filter: blur(var(--blur));
       background: var(--basecolor);
-    }
+    } */
 
     body {
       text-align: center;
@@ -91,15 +91,20 @@
   </style>
 
   <script>
-    // 获得所有input项
-    // querySelectorAll返回一个NodeList，有forEach方法
-    const inputList = document.querySelectorAll('.controls input');
-    
+    // 获得所有input项，转化为数组
+    const inputList = Array.from(document.getElementsByTagName('input'));
+    console.log(inputList);
+    const img = document.getElementById("img");
+
     // 处理函数
     function handleUpdate() {
-      // 后缀，dataset获得自定义属性data-sizing
       const suffix = this.dataset.sizing || '';
-      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      prop = this.name;
+      console.log(prop);
+      img.style.prop = this.value + suffix;
+      console.log(this.value,suffix);
+      // document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      // console.log(`--${this.name}`, this.value + suffix);
       document.getElementById(`code-${this.name}`).innerText = this.value + suffix;
     }
 
@@ -110,6 +115,7 @@
     inputList.forEach(item => {
       item.addEventListener('mousemove', handleUpdate);
     });
+
   </script>
 
 </body>

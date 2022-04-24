@@ -33,7 +33,7 @@ JavaScirpt30 是 Wes Bos 推出的一个 30 天挑战。项目免费提供了 30
 | ---- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | 4-21 | [JavaScript Drum Kit 指南](https://github.com/soyaine/JavaScript30/tree/master/01 - JavaScript Drum Kit) | [纯 JS 模拟敲鼓效果](http://garosy.top/JavaScript30/01 - JavaScript Drum Kit/index-START.html) |
 | 2    | 4-22 | [JS + CSS Clock 指南](https://github.com/soyaine/JavaScript30/tree/master/02 - JS %2B CSS Clock) | [纯 JavaScript+CSS 时钟效果](http://garosy.top/JavaScript30/02%20-%20JS%20+%20CSS%20Clock/index-GSY.html) |
-| 3    |      | [CSS Variables 指南](https://github.com/soyaine/JavaScript30/tree/master/03 - CSS Variables) | [用 CSS 变量实现拖动控制参数效果](http://soyaine.github.io/JavaScript30/03 - CSS Variables/index-SOYAINE.html) |
+| 3    | 4-24 | [CSS Variables 指南](https://github.com/soyaine/JavaScript30/tree/master/03 - CSS Variables) | [用 CSS 变量实现拖动控制参数效果](http://soyaine.github.io/JavaScript30/03 - CSS Variables/index-SOYAINE.html) |
 | 4    |      | [Array Cardio, Day 1 指南](https://github.com/soyaine/JavaScript30/tree/master/04 - Array Cardio Day 1) | [数组基本操作方法示例一](http://soyaine.github.io/JavaScript30/04 - Array Cardio Day 1/index-SOYAINE.html) |
 | 5    |      | [Flex Panel Gallery 指南](https://github.com/soyaine/JavaScript30/blob/master/05 - Flex Panel Gallery/README.md) | [可伸缩的图片墙在线效果](https://soyaine.github.io/JavaScript30/05 - Flex Panel Gallery/index-SOYAINE2.html) |
 | 6    |      | [Type Ahead 指南](https://github.com/soyaine/JavaScript30/blob/master/06 - Type Ahead/README.md) | [根据关键词快速匹配诗句在线效果](https://soyaine.github.io/JavaScript30/06 - Type Ahead/index-SOYAINE.html) |
