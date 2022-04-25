@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>请按 F12 查看 Console 面板</em> 💁</p>
   <p>若无结果请刷新试试</p>
@@ -102,6 +104,7 @@
 
     // 5. Sort the inventors by years lived、
     // 按照他们在世的岁数进行排序
+    console.log('5. ');
     const oldest = people.sort((a, b) => {
       const last = a.passed - a.year;
       const next = b.passed - b.year;
@@ -145,13 +148,17 @@
       'truck'
     ];
     const reduce = data.reduce((obj, item) => {
-      if (!obj[item]) {
-        obj[item] = 0;
+      if (!obj[item]) {   // 若累加对象中无元素item
+        obj[item] = 0;    // 令累加对象中元素item = 0
       }
-      obj[item]++;
-      return obj;
-    }, {});
+      obj[item]++;        // 累加器item++
+      return obj;         // 返回累加器进入下一轮迭代
+    }, {});               // 初始化累加器为对象
     console.log(reduce);
+
+
+
   </script>
 </body>
+
 </html>
