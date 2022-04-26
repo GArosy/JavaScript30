@@ -1,80 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Flex Panels 💪</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
   <style>
     html {
       box-sizing: border-box;
-      background:#ffc600;
-      font-family:'helvetica neue';
+      font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
     }
+
     body {
       margin: 0;
     }
-    *, *:before, *:after {
+
+    *,
+    *:before,
+    *:after {
       box-sizing: inherit;
     }
 
     .panels {
-      min-height:100vh;
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+      min-width: 750px;
       overflow: hidden;
     }
 
     .panel {
-      background:#6B0F9C;
-      box-shadow:inset 0 0 0 5px rgba(255,255,255,0.1);
-      color:white;
+      /* 项目属性 */
+      flex: 1 1 0;
+      /* 容器属性 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
       text-align: center;
-      align-items:center;
+
       /* Safari transitionend event.propertyName === flex */
       /* Chrome + FF transitionend event.propertyName === flex-grow */
       transition:
-        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
-        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        font-size 0.7s cubic-bezier(0.3, -0.19, 0.7, -0.11),
+        flex 0.7s cubic-bezier(0.3, -0.19, 0.7, -0.11),
         background 0.2s;
+
       font-size: 20px;
-      background-size:cover;
-      background-position:center;
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/1CD3fd8kHnE/1500x1500); }
-    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel1 {
+      background-image: url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500);
+    }
 
-    .panel > * {
-      margin:0;
+    .panel2 {
+      background-image: url(https://source.unsplash.com/1CD3fd8kHnE/1500x1500);
+    }
+
+    .panel3 {
+      background-image: url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d);
+    }
+
+    .panel4 {
+      background-image: url(https://source.unsplash.com/ITjiVXcwVng/1500x1500);
+    }
+
+    .panel5 {
+      background-image: url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500);
+    }
+
+    .panel>* {
+      margin: 0;
       width: 100%;
-      transition:transform 0.5s;
+      /* 设置并延迟拉回上下文字的时间 */
+      transition: transform 0.5s 0.7s;
+      /* 项目属性 */
+      flex: 1 1 auto;
+      /* 容器属性 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .panel p {
       text-transform: uppercase;
       font-family: 'Amatic SC', cursive;
-      text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.7), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
     }
+
+    /* p标签列中第二个p字号大一倍 */
     .panel p:nth-child(2) {
       font-size: 4em;
     }
 
+    /* 偏移上下p */
+    .panel p:first-child {
+      transform: translateY(-100%);
+    }
+
+    .panel p:last-child {
+      transform: translateY(100%);
+    }
+
+    /* 点击事件触发后flex增大，字放大一倍 */
     .panel.open {
-      font-size:40px;
+      font-size: 40px;
+      flex: 5;
     }
 
-    .cta {
-      color:white;
-      text-decoration: none;
+    /* 点击后拉回偏移的p */
+    .panel.open p:first-child {
+      transform: translateY(0);
     }
 
+    .panel.open p:last-child {
+      transform: translateY(0);
+    }
   </style>
 
 
@@ -107,7 +160,17 @@
   </div>
 
   <script>
-
+    // 获取panels列表
+    const panelList = document.querySelectorAll('.panel');
+    // 声明处理函数
+    function toggleOpen() {
+      console.log(this);
+      this.classList.toggle('open');
+    }
+    // 绑定事件
+    panelList.forEach(item => {
+      item.addEventListener('click', toggleOpen, false)
+    })
   </script>
 
 
@@ -116,4 +179,5 @@
 
 
 </body>
+
 </html>
