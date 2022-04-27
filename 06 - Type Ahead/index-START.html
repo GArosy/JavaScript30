@@ -1,22 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
+<head>
+  <meta charset="UTF-8" />
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
   <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
+    <input type="text" class="search" placeholder="诗句 诗名 诗人" />
     <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
+      <li>输入词句，找一首诗</li>
+      <li></li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint =
+      "https://gist.githubusercontent.com/soyaine/81399bb2b24ca1bb5313e1985533c640/raw/bdf7df2cbcf70706c4a5e51a7dfb8c933ed78878/TangPoetry.json";
+    // json转数组
+    const poetryList = [];
+    fetch(endpoint)
+      .then((response) => response.json())
+      .then((response) => poetryList.push(...response));
+    console.log(poetryList);
 
-</script>
-  </body>
+    // 输入处理函数
+    const inputHandle = function (input, poetryList) {
+      console.log('input change');
+      return poetryList.filter((poet) => {
+        // 正则找出匹配诗句
+        const regex = /input/ig;
+        // json的作者数据数组形式，须转换为字符串
+        const author = poet.detail_author.join('');
+        console.log(authorList);
+        return (
+          poet.title.match(regex) ||
+          poet.detail_text.match(regex) ||
+          author.match(regex)
+          )
+      })
+    }
+
+    // 输出处理函数
+    const outputHandle = function () {
+      
+    }
+
+    // 获取元素，添加监听事件
+    const search = document.querySelector(".search");
+    const suggestions = document.querySelector(".suggestions");
+
+    search.addEventListener('change', inputHandle, false);
+    search.addEventListener('keyup', outputHandle, false);
+  </script>
+</body>
+
 </html>
