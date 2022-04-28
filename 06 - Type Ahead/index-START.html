@@ -21,38 +21,63 @@
     // json转数组
     const poetryList = [];
     fetch(endpoint)
-      .then((response) => response.json())
-      .then((response) => poetryList.push(...response));
-    console.log(poetryList);
+      .then(response => response.json())
+      .then(response => {poetryList.push(...response);console.log('资源获取完成')});
+    // console.log(poetryList); // fetch是异步请求，打印为空值
 
     // 输入处理函数
     const inputHandle = function (input, poetryList) {
-      console.log('input change');
       return poetryList.filter((poet) => {
-        // 正则找出匹配诗句
-        const regex = /input/ig;
+        // 正则找出匹配的诗
+        const regex = new RegExp(input, 'ig');
         // json的作者数据数组形式，须转换为字符串
         const author = poet.detail_author.join('');
-        console.log(authorList);
+        // console.log(author);
         return (
           poet.title.match(regex) ||
           poet.detail_text.match(regex) ||
           author.match(regex)
-          )
+        )
       })
     }
 
     // 输出处理函数
     const outputHandle = function () {
-      
+      // 判断input是否为空值
+      if (!this.value) {
+        return
+      }
+      // 拿到匹配之后的诗数组
+      const result = inputHandle(this.value, poetryList);
+      // console.log(result);
+      const regex = new RegExp(this.value,"ig");
+      const html = result.map((item)=>{
+        // 将控制高亮的html代码加入原诗句，高亮匹配到的词句
+        const poetText = item.detail_text.replace(regex, 
+        `<span class="hl">${this.value}</span>`);
+        const title = item.title.replace(regex, 
+        `<span class="hl">${this.value}</span>`);
+        const author = item.detail_author.join('').replace(regex, 
+        `<span class="hl">${this.value}</span>`);
+        // 构造html
+        return `
+          <li>
+            <span class="poet">${poetText}</span>
+            <span class="title">${title} —— ${author}</span>
+          </li>
+        `
+      })
+      .join('');  // map返回数组，需转换为字符串才能写入html
+      // console.log(html);
+      // 写入html
+      suggestions.innerHTML = html;
+
     }
 
     // 获取元素，添加监听事件
     const search = document.querySelector(".search");
     const suggestions = document.querySelector(".suggestions");
-
-    search.addEventListener('change', inputHandle, false);
-    search.addEventListener('keyup', outputHandle, false);
+    search.addEventListener('input', outputHandle, false);
   </script>
 </body>
 
