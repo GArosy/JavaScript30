@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
+
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const dogs = [{
+      name: 'Snickers',
+      age: 2
+    }, {
+      name: 'hugo',
+      age: 8
+    }];
 
     function makeGreen() {
       const p = document.querySelector('p');
@@ -18,29 +26,71 @@
     }
 
     // Regular
+    console.log('-----------常规输出-----------');
 
     // Interpolated
-
+    console.log('-----------字符替换-----------');
+    console.log('字符串：%s', 'string');
+    console.log('整数：%d', 3);
+    console.log('浮点数：%f', 3.14);
+    console.log('对象：%o', {pi : 3.14});
+    
     // Styled
-
+    console.log('-----------输出样式-----------');
+    console.log('%c自定义样式','font-size: 2em; color: green');
+    
+    
     // warning!
-
+    console.warn('-----------输出警告-----------');
+    
     // Error :|
-
+    console.error('-----------输出错误-----------');
+    
     // Info
-
+    console.info('-----------输出info-----------');
+    
     // Testing
-
+    console.log('-----------assert方法-----------');
+    console.log('参数一表达式为false才会输出参数二');
+    console.assert(1+1 == 2, '1+1=2?');
+    console.assert(1+1 == 3, '1+1=3?');
+    
     // clearing
-
+    // console.clear();
+    
     // Viewing DOM Elements
-
+    console.log('-----------访问DOM-----------');
+    const p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
+    
     // Grouping together
-
+    console.log('-----------打组-----------');
+    console.group('label');
+    console.log({age:1});
+    console.log({age:2});
+    console.log({age:3});
+    console.groupEnd();
+    
     // counting
-
+    console.log('-----------计数-----------');
+    console.count('number1');
+    console.count('number1');
+    console.count('number2');
+    console.count('number2');
+    console.count('number2');
+    console.count('number3');
+    
     // timing
-
+    console.log('-----------计时-----------');
+    console.time('fetch my data');
+    fetch('https://api.github.com/users/garosy')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetch my data');
+        console.log(data);
+      })
   </script>
 </body>
+
 </html>

@@ -1,19 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>HTML5 Canvas</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+    canvas {
+      overflow: hidden;
+    }
+  </style>
 </head>
+
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <!-- 加入canvas元素 -->
+  <canvas id="draw" width="800" height="800" style="overflow: auto;"></canvas>
+  <script>
+    // 初始化canvas
+    const canvas = document.getElementById('draw');
+    const ctx = canvas.getContext('2d');
 
-<style>
-  html, body {
-    margin:0;
-  }
-</style>
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.lineWidth = 40;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#f00';
+    ctx.fillStyle = '#f00';
 
+    // 初始化全局变量
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let hue = 0;
+    let direction = true;
+    let x = 0;
+    let y = 0;
+
+    // 声明绘制函数
+    const draw = function(event) {
+      if (!isDrawing) return;
+
+      // console.log(event.type);
+
+      // 鼠标定位
+      if (event.type == 'mousemove') {
+        x = event.offsetX;
+        y = event.offsetY;
+      } else {
+        // 处理触摸屏操作
+        x = event.changedTouches[0].clientX;
+        y = event.changedTouches[0].clientY;
+        // console.log(event);
+      }
+
+      // 控制canvas描边实现彩虹效果
+      ctx.strokeStyle = `hsl(${ hue }, 90%, 50%)`;
+      // 色相循环变化
+      if (hue >= 360) hue = 0;
+      hue ++;
+
+      // 绘制
+      ctx.beginPath();
+      ctx.moveTo(lastX,lastY);
+      ctx.lineTo(x,y);
+      ctx.stroke();
+      [lastX,lastY] = [x, y];
+    }
+
+    // 监听鼠标事件
+    canvas.addEventListener('mousedown', (event)=> {
+      isDrawing = true;
+      [lastX,lastY] = [event.offsetX, event.offsetY];
+    });
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', ()=> isDrawing = false);
+    canvas.addEventListener('mouseout', ()=> isDrawing = false);
+    // 监听触屏事件
+    canvas.addEventListener('touchstart', (event)=> {
+      isDrawing = true;
+      lastX = event.changedTouches[0].clientX;
+      lastY = event.changedTouches[0].clientY;
+    });
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', ()=> isDrawing = false);
+    canvas.addEventListener('touchcancel', ()=> isDrawing = false);
+
+  </script>
 </body>
+
 </html>
