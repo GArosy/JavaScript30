@@ -11,7 +11,7 @@
   <!-- 播放器 -->
   <div class="player">
     <!-- 视频 -->
-    <video class="player__video viewer" src=""></video>
+    <video class="player__video viewer" src="sample.mp4"></video>
     <!-- 控制面板 -->
     <div class="player__controls">
       <!-- 进度条 -->
@@ -19,19 +19,22 @@
         <div class="progress__filled"></div>
       </div>
       <!-- 播放键 -->
-      <button class="player__button toggle" title="Toggle Play">►</button>
+      <button class="player__button toggle" title="Toggle Play">
+        <ion-icon name="play"></ion-icon>
+      </button>
       <!-- 音量条 -->
       <input type="range" name="volume" class="player__slider" min=0 max="1" step="0.05" value="1">
       <!-- 倍速条 -->
-      <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
+      <input type="range" name="playbackRate" class="player__slider" min="0.5" max="3" step="0.1" value="1">
       <!-- 后退10秒 -->
       <button data-skip="-10" class="player__button">« 10s</button>
       <!-- 前进25秒 -->
       <button data-skip="25" class="player__button">25s »</button>
     </div>
   </div>
-
-  <script src="scripts-FINISHED.js"></script>
+  <script src="scripts.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
