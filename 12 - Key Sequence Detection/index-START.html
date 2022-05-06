@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
+
 <body>
-<script>
-</script>
+  <h1 style="text-align: center">Enter the secret code!</h1>
+  <script>
+    let pressed = [],
+      secretCode = 'hello';
+
+    const detect = function (e) {
+      console.log(e.key);
+      pressed.push(e.key);
+      // 只保留最后输入的、长度为 secretCode.length 的字符数组
+      pressed.splice(0, pressed.length - secretCode.length)
+      console.log(pressed);
+      if (pressed.join('').includes(secretCode)) {
+        console.log("secret code right!");
+        pressed = [];
+        cornify_add();
+      }
+    }
+
+    window.addEventListener('keyup', e => detect(e))
+  </script>
 </body>
+
 </html>
