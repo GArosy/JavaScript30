@@ -13,10 +13,11 @@
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // 现在我们想要复制它
-
+    let arr = players;
     // 也许你觉得可以直接这样修改复制后的数组:
-
+    // arr.push('Hello')
     // 但我们修改这个数组的时候会发生什么呢？
+    console.log(arr, players);
 
     // 这就是问题所在
 
@@ -25,10 +26,12 @@
     // 为什么？因为 team 只是这个数组的引用，并不是它的复制。team 和 players 指向的是同一个数组。
 
     // 所以如何解决这个问题？下面来进行真正的复制吧。
-
-    // one day
-
+    
+    // slice()
+    let arr1 = players.slice();
+    
     // 或者创建一个新数组，然后用 concat 方法来获取它
+    let arr2 = [].concat(players)
 
     // 再或者用 ES6 里面的扩展语法
 
