@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Mouse Shadow</title>
 </head>
+
 <body>
 
   <div class="hero">
@@ -11,30 +13,70 @@
   </div>
 
   <style>
-  html {
-    color:black;
-    font-family: sans-serif;
-  }
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
 
-  body {
-    margin: 0;
-  }
+    body {
+      margin: 0;
+    }
 
-  .hero {
-    min-height: 100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    color:black;
-  }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+      font-size: 100px;
+    }
   </style>
 
-<script>
-</script>
+  <script>
+    const elDiv = document.querySelector('.hero');
+    const elH1 = document.querySelector('h1');
+    const factor = 0.4;
+
+    const shadowMove = function (e) {
+      // ES6 解构赋值
+      // 元素宽高
+      const {
+        offsetWidth: width,
+        offsetHeight: height
+      } = elDiv;
+      // 鼠标坐标
+      let {
+        offsetX: x,
+        offsetY: y
+      } = e;
+
+      if (this !== e.target) {
+        x = x + e.target.offsetLeft;
+        y = y + e.target.offsetTop;
+      }
+
+      const xWalk = parseInt((x - width / 2) * factor);
+      const yWalk = parseInt((y - height / 2) * factor);
+      // console.log(xWalk, yWalk);
+      // console.log(x, y);
+
+      // 使用模板字符串赋值
+      elH1.style.textShadow = `
+        ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
+        ${xWalk * -1}px ${yWalk}px 0 rgba(0,255,255,0.7),
+        ${xWalk}px ${yWalk * -1}px 0 rgba(255,255,0,0.7),
+        ${xWalk * -1}px ${yWalk * -1}px 0 rgba(0, 0,255,0.7)
+      `
+
+
+    }
+
+    elDiv.addEventListener('mousemove', shadowMove);
+  </script>
 </body>
+
 </html>

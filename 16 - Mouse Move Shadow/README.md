@@ -29,6 +29,7 @@ hero.addEventListener('mousemove',shadowMove);
 ```
 
 3.为获得第一个阴影的瞬时位置，需要通过鼠标位置距离`h1`中心的距离乘以`factor`系数来获得，`pos`表示鼠标当前位置的坐标,range指代`hero`元素的宽和高：
+
 ```js
     var disX = parseInt((pos.x-range.x/2)*factor);
     var disY = parseInt((pos.y-range.y/2)*factor);
@@ -45,6 +46,7 @@ hero.addEventListener('mousemove',shadowMove);
     }
 ```
 5.计算出`h1`元素第一个阴影位置后，可以以坐标镜像或旋转90°等不同的方式来生成其他阴影，本例中我们采用绕`h1`元素中心旋转90°的方式共生成4个阴影：
+
 ```js
     text.style.textShadow = `
       ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
