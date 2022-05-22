@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
+
 <body>
 
   <style>
@@ -26,10 +28,12 @@
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
+
     #bands li {
       border-bottom: 1px solid #efefef;
       padding: 20px;
     }
+
     #bands li:last-child {
       border-bottom: 0;
     }
@@ -38,16 +42,42 @@
       color: #ffc600;
       text-decoration: none;
     }
-
   </style>
 
   <ul id="bands"></ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  <script>
+    const list = document.getElementById('bands');
+    console.log(list);
+
+    const bands = ['Anywhere But Here', 'The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled',
+      'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive',
+      'An Old Dog'
+    ];
+
+    // 去除前缀函数
+    const delPrefix = function (item) {
+      // 正则
+      return item.replace(/^(A|An|The)\s{1}/, '');
+    }
 
 
-</script>
+    // sort()影响原数组
+    const sortedBands = [...bands].sort((a, b) => delPrefix(a) < delPrefix(b) ? -1 : 1);
+    console.log(sortedBands);
+    console.log(bands);
+
+    // 将数组渲染至html
+    // sortedBands.forEach((item, i) => {
+    //   let child = document.createElement('li');
+    //   child.innerHTML = item;
+    //   list.appendChild(child)
+    // })
+
+    // 更快的渲染方法：将排列好的新数组拼接成带有标签的HTML元素，一次性插入列表
+    list.innerHTML = '<li>' + sortedBands.join('</li><li>') + '</li>';
+  </script>
 
 </body>
+
 </html>
