@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
+  <p>总播放时间为：<span id="totaltime"></span></p>
+
   <ul class="videos">
     <li data-time="5:43">
       Video 1
@@ -181,7 +185,29 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    let lists = Array.form()document.querySelectorAll('li');
+    let times = [];
+
+    // 遍历，得到data-time中的 分：秒 值，放入二位数组
+    const result = lists.map((item, i) => {
+      times[i] = item.dataset.time.split(':');
+      // 转化为秒
+      return parseInt(times[i][0], 10) * 60 + parseInt(times[1], 10)
+    }).reduce((a, b) => a + b, 0)
+
+    const showRes = function (seconds) {
+      const sec = seconds % 60;
+      const hour = Math.floor(seconds/3600);
+      const min = (seconds - 3600 * hour - sec)/60;
+      document.querySelector('#totaltime').innerHTML =  `${hour}小时${min}分${sec}秒`
+    }
+
+    showRes(result);
+    console.log(times);
+
+    // 累加
+  </script>
 </body>
+
 </html>
