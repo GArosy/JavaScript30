@@ -1,33 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>👀👀👀Follow Along Nav</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <nav>
-      <ul class="menu">
-        <li><a href="">Home</a></li>
-        <li><a href="">Order Status</a></li>
-        <li><a href="">Tweets</a></li>
-        <li><a href="">Read Our History</a></li>
-        <li><a href="">Contact Us</a></li>
-      </ul>
-    </nav>
+  <nav>
+    <ul class="menu">
+      <li><a href="">Home</a></li>
+      <li><a href="">Order Status</a></li>
+      <li><a href="">Tweets</a></li>
+      <li><a href="">Read Our History</a></li>
+      <li><a href="">Contact Us</a></li>
+    </ul>
+  </nav>
 
-    <div class="wrapper">
-      <p>Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit. Est <a href="">explicabo</a> unde natus necessitatibus esse obcaecati distinctio, aut itaque, qui vitae!</p>
-      <p>Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque praesentium laborum pariatur earum <a href="">quaerat</a> cupiditate consequuntur facilis ullam dignissimos, aperiam quam veniam.</p>
-      <p>Cum ipsam quod, incidunt sit ex <a href="">tempore</a> placeat maxime <a href="">corrupti</a> possimus <a href="">veritatis</a> ipsum fugit recusandae est doloremque? Hic, <a href="">quibusdam</a>, nulla.</p>
-      <p>Esse quibusdam, ad, ducimus cupiditate <a href="">nulla</a>, quae magni odit <a href="">totam</a> ut consequatur eveniet sunt quam provident sapiente dicta neque quod.</p>
-      <p>Aliquam <a href="">dicta</a> sequi culpa fugiat <a href="">consequuntur</a> pariatur optio ad minima, maxime <a href="">odio</a>, distinctio magni impedit tempore enim repellendus <a href="">repudiandae</a> quas!</p>
-    </div>
+  <div class="wrapper">
+    <p>Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit. Est <a href="">explicabo</a> unde natus
+      necessitatibus esse obcaecati distinctio, aut itaque, qui vitae!</p>
+    <p>Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque praesentium laborum pariatur earum <a
+        href="">quaerat</a> cupiditate consequuntur facilis ullam dignissimos, aperiam quam veniam.</p>
+    <p>Cum ipsam quod, incidunt sit ex <a href="">tempore</a> placeat maxime <a href="">corrupti</a> possimus <a
+        href="">veritatis</a> ipsum fugit recusandae est doloremque? Hic, <a href="">quibusdam</a>, nulla.</p>
+    <p>Esse quibusdam, ad, ducimus cupiditate <a href="">nulla</a>, quae magni odit <a href="">totam</a> ut consequatur
+      eveniet sunt quam provident sapiente dicta neque quod.</p>
+    <p>Aliquam <a href="">dicta</a> sequi culpa fugiat <a href="">consequuntur</a> pariatur optio ad minima, maxime <a
+        href="">odio</a>, distinctio magni impedit tempore enim repellendus <a href="">repudiandae</a> quas!</p>
+  </div>
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    const oLi = document.querySelectorAll('li');
+
+    // 生成绝对定位的块元素
+    let activeBackground = document.createElement('span');
+    // 设置该元素class为highlight
+    activeBackground.setAttribute('class', 'highlight');
+    // 将该元素插入DOM
+    document.body.appendChild(activeBackground);
+    // 避免第一次激活时跳动,如果没有此句，可以看到第一次标签被激活时，块元素会从左上角移动至对应标签处。
+    activeBackground.style.display = 'none';
+
+    // 点亮函数
+    // const lightOn = function (e) {
+    //   // 获取getBoundingClientRect返回的位置信息对象
+    //   const activeLink = e.target.getBoundingClientRect();
+    //   const coords = {
+    //     height: activeLink.height,
+    //     width: activeLink.width,
+    //     // scrollX/Y 页面滚动过的距离
+    //     left: window.scrollX + activeLink.left,
+    //     top: window.scrollY + activeLink.top
+    //   }
+    //   activeBackground.style.height = `${coords.height}px`;
+    //   activeBackground.style.width = `${coords.width}px`;
+    //   activeBackground.style.left = `${coords.left}px`;
+    //   activeBackground.style.top = `${coords.top}px`;
+    //   activeBackground.style.display = 'inline';
+    // }
+
+    // 点亮函数ES6
+    const lightOn = function (e) {
+      // ES6解构赋值获取getBoundingClientRect返回的位置信息
+      const coords = {
+        height,
+        width,
+        left,
+        top
+      } = e.target.getBoundingClientRect();
+      console.log(coords);
+
+      activeBackground.style.height = `${coords.height}px`;
+      activeBackground.style.width = `${coords.width}px`;
+      activeBackground.style.left = `${coords.left + window.scrollX}px`;
+      activeBackground.style.top = `${coords.top + window.scrollY}px`;
+      activeBackground.style.display = 'inline';
+    }
+
+    oLi.forEach(item => item.addEventListener('mouseenter', lightOn));
   </script>
 </body>
-</html>
 
+</html>

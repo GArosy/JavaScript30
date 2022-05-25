@@ -186,25 +186,29 @@
     </li>
   </ul>
   <script>
-    let lists = Array.form()document.querySelectorAll('li');
-    let times = [];
+    let lists = Array.from(document.getElementsByTagName('li'));
 
     // 遍历，得到data-time中的 分：秒 值，放入二位数组
     const result = lists.map((item, i) => {
-      times[i] = item.dataset.time.split(':');
+      let time = item.dataset.time.split(':');
+      // console.log(time);
       // 转化为秒
-      return parseInt(times[i][0], 10) * 60 + parseInt(times[1], 10)
+      return parseInt(time[0], 10) * 60 + parseInt(time[1], 10)
     }).reduce((a, b) => a + b, 0)
+    console.log(result);
 
     const showRes = function (seconds) {
+      // 时间为60进制，直接对seconds取余60，得到秒
       const sec = seconds % 60;
+      // 得到小时
       const hour = Math.floor(seconds/3600);
+      // 得到分
       const min = (seconds - 3600 * hour - sec)/60;
+      // 通过模板字符串写入html
       document.querySelector('#totaltime').innerHTML =  `${hour}小时${min}分${sec}秒`
     }
-
+    
     showRes(result);
-    console.log(times);
 
     // 累加
   </script>
