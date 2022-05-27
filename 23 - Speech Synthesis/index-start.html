@@ -1,40 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Speech Synthesis</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="voiceinator">
+  <div class="voiceinator">
 
-      <h1>The Voiceinator 5000</h1>
+    <h1>The Voiceinator</h1>
 
-      <select name="voice" id="voices">
-        <option value="">Select A Voice</option>
-      </select>
+    <select name="voice" id="voices">
+      <option value="">选择语种</option>
+    </select>
 
-      <label for="rate">Rate:</label>
-      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+    <label for="rate">速度:</label>
+    <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
 
-      <label for="pitch">Pitch:</label>
+    <label for="pitch">音调:</label>
 
-      <input name="pitch" type="range" min="0" max="2" step="0.1">
-      <textarea name="text">Hello! I love JavaScript 👍</textarea>
-      <button id="stop">Stop!</button>
-      <button id="speak">Speak</button>
+    <input name="pitch" type="range" min="0" max="2" step="0.1">
+    <textarea name="text" placeholder="输入你想听的内容"></textarea>
+    <button id="stop">停止</button>
+    <button id="speak">阅读</button>
 
-    </div>
+  </div>
 
-<script>
-  const msg = new SpeechSynthesisUtterance();
-  let voices = [];
-  const voicesDropdown = document.querySelector('[name="voice"]');
-  const options = document.querySelectorAll('[type="range"], [name="text"]');
-  const speakButton = document.querySelector('#speak');
-  const stopButton = document.querySelector('#stop');
-</script>
+  <script>
+    // 语音服务的控制接口，控制阅读器行为，包括获取浏览器支持的朗读语言，文本朗读，暂停，停止等
+    const synth = window.speechSynthesis;
+    // 发音请求接口，包含朗读内容和方式
+    const msg = new SpeechSynthesisUtterance();
+    let voices = [];
+    // 获取元素
+    const voicesDropdown = document.querySelector('[name="voice"]');
+    const options = document.querySelectorAll('[type="range"], [name="text"]');
+    const speakButton = document.querySelector('#speak');
+    const stopButton = document.querySelector('#stop');
+    msg.text = '请输入内容';
+
+    // 获得浏览器支持的阅读语言并填充至下拉列表
+    const getSupportVoice = function () {
+      voices = synth.getVoices();
+      // console.log(voices);
+      voices.forEach(element => {
+        let option = document.createElement('option');
+        option.textContent = `${element.name}(${element.lang})`;
+        
+        if (element.default) {
+          option.textContent += ' —— DEFAULT ';
+        }
+
+        option.setAttribute('lang', element.lang);
+        option.setAttribute('name', element.name);
+        voicesDropdown.appendChild(option);
+      });
+    }
+    
+    // 播放
+    const speak = function () {
+      // .options[voicesDropdown.selectedIndex]获取下拉菜单选中的option项
+      msg.lang = voicesDropdown.options[voicesDropdown.selectedIndex].lang;
+      // options无法使用dataset获取自定义属性，也无法直接用name获取，需要使用getAttribute()方法
+      msg.name = voicesDropdown.options[voicesDropdown.selectedIndex].getAttribute('name');
+      synth.speak(msg);
+      console.log(voicesDropdown.value);
+    }
+
+    // 阅读参数变化
+    const paramChange = function () {
+      msg[this.name] = this.value;
+    }
+
+    // 停止
+    const stopSpeak = function () {
+      synth.cancel();
+    }
+
+    // 事件绑定
+    options.forEach(item => item.addEventListener('change', paramChange));
+    synth.addEventListener('voiceschanged', getSupportVoice);
+    speakButton.addEventListener('click', speak);
+    stopButton.addEventListener('click', stopSpeak);
+  </script>
 
 </body>
+
 </html>
