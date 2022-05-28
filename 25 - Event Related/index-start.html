@@ -11,6 +11,7 @@
     <div class="one">
         <div class="two">
             <div class="three">
+                <div class="four"></div>
             </div>
         </div>
     </div>
@@ -28,7 +29,7 @@
 
         div {
             width: 100%;
-            padding: 100px;
+            padding: 80px;
         }
 
         .one {
@@ -42,6 +43,9 @@
         .three {
             background: coral;
         }
+        .four {
+            background: black;
+        }
     </style>
 
     <script>
@@ -49,24 +53,32 @@
         let one = document.querySelector('.one');
         let two = document.querySelector('.two');
         let three = document.querySelector('.three');
-        divs.forEach(div => div.addEventListener('click', logText, {
-            once: true,
-            capture: false
-        }));
+        let four = document.querySelector('.four');
 
-        // one.addEventListener('click', logText1, {
-        //     // capture: true
-        // });
-        // two.addEventListener('click', logText2, {
-        //     // capture: true
-        // });
-        // three.addEventListener('click', logText3, {
-        //     capture: true
-        // });
+        // 第三参数为 true捕获/false冒泡，表示事件触发顺序为由外到内/由内到外
+        // divs.forEach(div => div.addEventListener('click', logText, false));
+        
+        // 第三参数为参数对象
+        // capture表示是否使用事件捕获流（由外到内）
+        // once表示是否只触发一次
+        one.addEventListener('click', logText1, {
+            capture: false,
+            once: true
+        });
+        two.addEventListener('click', logText2, {
+            capture: true
+        });
+        three.addEventListener('click', logText3, {
+            capture: true
+        });
+        four.addEventListener('click', logText4, {
+            capture: false
+        });
 
        
         function logText(e) {
             console.log(this.classList.value);
+            // stopPropagation()可以阻断事件继续传播
             // e.stopPropagation();
         }
 
@@ -82,7 +94,12 @@
 
         function logText3(e) {
             console.log(this.classList.value);
-            e.stopPropagation();
+            // e.stopPropagation();
+        }
+
+        function logText4(e) {
+            console.log(this.classList.value);
+            // e.stopPropagation();
         }
     </script>
 </body>
