@@ -18,6 +18,7 @@
 
 ## 过程指南   
 1.监听每一个导航栏按钮的鼠标移入移出事件
+
 ```js
 var mainUl = document.querySelectorAll('.cool > li >a');
 var navArr = Array.from(mainUl);
@@ -38,6 +39,7 @@ navArr.map(function(item,index){
 });
 ```
 2.toggleBackground()函数为自定义函数，当传入整数参数时，根据对应的下拉菜单序号获取下拉菜单的尺寸，将绝对定位的白色背景衬底改编为对应大小，并移动至相应位置；当不传入任何参数时，表示鼠标没有悬停于任何按钮上，此时需要将下拉菜单的背景置为透明。        
+
 ```js
 function toggleBackground(item){
     var itemPos;
@@ -56,7 +58,7 @@ function toggleBackground(item){
     }
 }
 ```
-  
+
 ## 延伸思考  
 1.本例中将相应的样式编写在一个css类中，通过添加和移出类来实现需要的效果，js编程实践中非常推荐这种将DOM操作集中化的做法。      
 2.除了使用js脚本来实现交互效果外，也可以使用下面的css来实现鼠标悬浮在按钮上时显示下拉菜单的效果（代码中`~`表示同级的元素,由于`index-start.html`中给定的结构中下拉菜单的白色沉底为独立元素，需要动态获取其对应尺寸，故使用js脚本更容易实现）   
