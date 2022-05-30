@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Click and Drag</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="items">
     <div class="item item1">01</div>
@@ -34,8 +36,40 @@
     <div class="item item25">25</div>
   </div>
 
-<script>
-</script>
+  <script>
+    const slider = document.querySelector('.items');
+    // 记录鼠标按下
+    let isMouseDown = false;
+    // 按下时的x坐标
+    let startX;
+    // 视口相对于items左侧划过距离
+    let scrollLeft;
 
-  </body>
+    // 鼠标按下事件
+    slider.addEventListener('mousedown', (e) => {
+      isMouseDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft
+    })
+    // 鼠标移动事件
+    slider.addEventListener('mousemove', (e) => {
+      if (!isMouseDown) return;
+      e.preventDefault();
+      /**
+       * e.pageX - slider.offsetLeft 当前鼠标位置
+       * startX - (e.pageX - slider.offsetLeft 鼠标移动距离
+       * *1 系数
+       */
+      slider.scrollLeft = scrollLeft + (startX - (e.pageX - slider.offsetLeft))*1;
+    })
+    // 鼠标弹起事件
+    slider.addEventListener('mouseup', (e) => {
+      isMouseDown = false;
+      slider.classList.remove('active');
+    })
+  </script>
+
+</body>
+
 </html>
