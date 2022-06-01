@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Countdown Timer</title>
+  <title>番茄时钟</title>
   <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="bc"></div>
   <div class="timer">
     <div class="timer__controls">
-      <button data-time="20" class="timer__button">20 Secs</button>
-      <button data-time="300" class="timer__button">Work 5</button>
-      <button data-time="900" class="timer__button">Quick 15</button>
-      <button data-time="1200" class="timer__button">Snack 20</button>
-      <button data-time="3600" class="timer__button">Lunch Break</button>
+      <button data-time="20" class="timer__button">20 秒</button>
+      <button data-time="1500" class="timer__button">一个番茄</button>
+      <button data-time="3600" class="timer__button">两个番茄</button>
+      <button data-time="600" class="timer__button">一次休息</button>
+      <button data-time="2400" class="timer__button">午休时间</button>
       <form name="customForm" id="custom">
-        <input type="text" name="minutes" placeholder="Enter Minutes">
+        <input type="text" name="minutes" placeholder="自定义时间（分钟）">
       </form>
     </div>
     <div class="display">
